@@ -1,2 +1,10 @@
-build
+*.o
+*.so
+*.pyc
+*.plan
 bert-base-uncased
+*Cache
+answer/
+__pycache__
+.vscode
+build

@@ -1,0 +1,556 @@
+[03/28/2025-16:07:35] [TRT] [I] Using configuration file: bert-base-uncased/config.json
+[03/28/2025-16:07:36] [TRT] [I] Found 202 entries in weight map
+[03/28/2025-16:07:36] [TRT] [I] [MemUsageChange] Init CUDA: CPU +2, GPU +0, now: CPU 517, GPU 16748 (MiB)
+[03/28/2025-16:07:50] [TRT] [I] [MemUsageChange] Init builder kernel library: CPU +1458, GPU +266, now: CPU 2052, GPU 17014 (MiB)
+[03/28/2025-16:07:50] [TRT] [I] [Network] add input:input_ids, shape=(1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] add input:token_type_ids, shape=(1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] add input:position_ids, shape=(1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 2_nn.Embedding, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 4_nn.Embedding, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 6_nn.Embedding, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 7_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 8_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 13_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 17_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 18_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 22_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 23_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 27_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 28_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 29_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 30_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 31_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 32_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 33_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 37_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 38_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 43_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 47_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 60_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 64_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 65_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 70_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 74_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 75_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 79_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 80_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 84_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 85_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 86_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 87_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 88_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 89_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 90_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 94_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 95_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 100_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 104_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 117_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 121_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 122_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 127_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 131_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 132_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 136_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 137_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 141_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 142_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 143_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 144_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 145_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 146_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 147_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 151_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 152_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 157_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 161_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 174_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 178_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 179_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 184_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 188_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 189_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 193_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 194_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 198_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 199_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 200_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 201_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 202_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 203_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 204_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 208_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 209_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 214_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 218_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 231_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 235_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 236_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 241_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 245_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 246_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 250_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 251_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 255_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 256_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 257_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 258_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 259_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 260_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 261_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 265_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 266_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 271_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 275_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 288_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 292_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 293_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 298_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 302_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 303_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 307_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 308_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 312_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 313_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 314_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 315_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 316_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 317_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 318_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 322_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 323_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 328_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 332_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 345_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 349_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 350_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 355_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 359_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 360_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 364_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 365_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 369_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 370_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 371_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 372_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 373_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 374_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 375_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 379_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 380_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 385_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 389_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 402_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 406_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 407_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 412_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 416_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 417_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 421_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 422_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 426_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 427_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 428_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 429_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 430_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 431_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 432_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 436_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 437_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 442_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 446_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:50] [TRT] [I] [Network] 459_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 463_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 464_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 469_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 473_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 474_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 478_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 479_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 483_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 484_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 485_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 486_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 487_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 488_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 489_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 493_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 494_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 499_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 503_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 516_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 520_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 521_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 526_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 530_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 531_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 535_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 536_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 540_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 541_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 542_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 543_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 544_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 545_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 546_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 550_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 551_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 556_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 560_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 573_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 577_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 578_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 583_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 587_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 588_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 592_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 593_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 597_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 598_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 599_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 600_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 601_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 602_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 603_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 607_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 608_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 613_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 617_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 630_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 634_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 635_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 640_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 644_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 645_trt.Shuffle.att_q_view_transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 649_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 650_trt.Shuffle.att_k_view_and transpose, output[0] shape= (1, 12, 64, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 654_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 655_trt.Shuffle.att_v_view_and transpose, output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 656_nn.MatMul.q_mul_k, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 657_nn.Scale, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 658_nn.SoftMax, output[0] shape= (1, 12, -1, -1)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 659_nn.MatMul.matmul(p_attn, value), output[0] shape= (1, 12, -1, 64)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 660_trt.Shuffle.attn_transpose_and_reshape, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 664_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 665_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 670_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 674_nn.Linear, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 687_nn.GELU, output[0] shape= (1, -1, 3072)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 691_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 692_nn.Add, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 697_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 701_nn.Linear, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 714_nn.GELU, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 719_nn.LayerNorm, output[0] shape= (1, -1, 768)
+[03/28/2025-16:07:51] [TRT] [I] [Network] 723_nn.Linear, output[0] shape= (1, -1, 30522)
+[03/28/2025-16:07:51] [TRT] [I] [Network] mark output:(Unnamed Layer* 722) [ElementWise]_output, shape=(1, -1, 30522)
+[03/28/2025-16:07:52] [TRT] [I] Graph optimization time: 1.09548 seconds.
+[03/28/2025-16:07:54] [TRT] [I] [MemUsageChange] Init cuBLAS/cuBLASLt: CPU +1154, GPU +280, now: CPU 4041, GPU 17294 (MiB)
+[03/28/2025-16:07:56] [TRT] [I] [MemUsageChange] Init cuDNN: CPU +986, GPU +192, now: CPU 5027, GPU 17486 (MiB)
+[03/28/2025-16:07:56] [TRT] [W] TensorRT was linked against cuDNN 8.9.0 but loaded cuDNN 8.2.1
+[03/28/2025-16:07:56] [TRT] [I] Local timing cache in use. Profiling results in this builder pass will not be stored.
+[03/28/2025-16:12:20] [TRT] [I] Detected 3 inputs and 1 output network tensors.
+[03/28/2025-16:12:23] [TRT] [I] Total Host Persistent Memory: 527232
+[03/28/2025-16:12:23] [TRT] [I] Total Device Persistent Memory: 122880
+[03/28/2025-16:12:23] [TRT] [I] Total Scratch Memory: 1575424
+[03/28/2025-16:12:23] [TRT] [I] [MemUsageStats] Peak memory usage of TRT CPU/GPU memory allocators: CPU 667 MiB, GPU 792 MiB
+[03/28/2025-16:12:23] [TRT] [I] [BlockAssignment] Started assigning block shifts. This will take 557 steps to complete.
+[03/28/2025-16:12:23] [TRT] [I] [BlockAssignment] Algorithm ShiftNTopDown took 19.9845ms to assign 8 blocks to 557 nodes requiring 15629824 bytes.
+[03/28/2025-16:12:23] [TRT] [I] Total Activation Memory: 15628800
+[03/28/2025-16:12:23] [TRT] [I] [MemUsageChange] Init cuBLAS/cuBLASLt: CPU +0, GPU +8, now: CPU 5551, GPU 17802 (MiB)
+[03/28/2025-16:12:23] [TRT] [I] [MemUsageChange] Init cuDNN: CPU +0, GPU +10, now: CPU 5551, GPU 17812 (MiB)
+[03/28/2025-16:12:23] [TRT] [W] TensorRT was linked against cuDNN 8.9.0 but loaded cuDNN 8.2.1
+[03/28/2025-16:12:23] [TRT] [W] TensorRT encountered issues when converting weights between types and that could affect accuracy.
+[03/28/2025-16:12:23] [TRT] [W] If this is not the desired behavior, please modify the weights or retrain with regularization to adjust the magnitude of the weights.
+[03/28/2025-16:12:23] [TRT] [W] Check verbose logs for the list of affected weights.
+[03/28/2025-16:12:23] [TRT] [W] - 84 weights are affected by this issue: Detected subnormal FP16 values.
+[03/28/2025-16:12:23] [TRT] [W] - 44 weights are affected by this issue: Detected values less than smallest positive FP16 subnormal value and converted them to the FP16 minimum subnormalized value.
+[03/28/2025-16:12:23] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in building engine: CPU +209, GPU +301, now: CPU 209, GPU 301 (MiB)
+[03/28/2025-16:12:23] [TRT] [I] build engine in 271.912 Sec
+[03/28/2025-16:12:23] [TRT] [I] Saving Engine to bert-base-uncased/model_fp16.plan
+[03/28/2025-16:12:23] [TRT] [I] Done.
+[03/28/2025-16:12:24] [TRT] [I] Loaded engine size: 301 MiB
+[03/28/2025-16:12:24] [TRT] [I] [MemUsageChange] Init cuBLAS/cuBLASLt: CPU +1, GPU +8, now: CPU 5324, GPU 18090 (MiB)
+[03/28/2025-16:12:24] [TRT] [I] [MemUsageChange] Init cuDNN: CPU +0, GPU +8, now: CPU 5324, GPU 18098 (MiB)
+[03/28/2025-16:12:24] [TRT] [W] TensorRT was linked against cuDNN 8.9.0 but loaded cuDNN 8.2.1
+[03/28/2025-16:12:24] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in engine deserialization: CPU +0, GPU +300, now: CPU 209, GPU 601 (MiB)
+[03/28/2025-16:12:24] [TRT] [I] [MemUsageChange] Init cuBLAS/cuBLASLt: CPU +0, GPU +8, now: CPU 5022, GPU 18090 (MiB)
+[03/28/2025-16:12:24] [TRT] [I] [MemUsageChange] Init cuDNN: CPU +0, GPU +8, now: CPU 5022, GPU 18098 (MiB)
+[03/28/2025-16:12:24] [TRT] [W] TensorRT was linked against cuDNN 8.9.0 but loaded cuDNN 8.2.1
+[03/28/2025-16:12:24] [TRT] [I] [MemUsageChange] TensorRT-managed allocation in IExecutionContext creation: CPU +1, GPU +15, now: CPU 210, GPU 616 (MiB)
+embeddings_word_embeddings [30522, 768]
+embeddings_position_embeddings [512, 768]
+embeddings_token_type_embeddings [2, 768]
+embeddings_layernorm_gamma [768]
+embeddings_layernorm_beta [768]
+l0_attention_self_query_kernel [768, 768]
+l0_attention_self_query_bias [768]
+l0_attention_self_key_kernel [768, 768]
+l0_attention_self_key_bias [768]
+l0_attention_self_value_kernel [768, 768]
+l0_attention_self_value_bias [768]
+l0_attention_output_dense_kernel [768, 768]
+l0_attention_output_dense_bias [768]
+l0_attention_output_layernorm_gamma [768]
+l0_attention_output_layernorm_beta [768]
+l0_intermediate_dense_kernel [3072, 768]
+l0_intermediate_dense_bias [3072]
+l0_output_dense_kernel [768, 3072]
+l0_output_dense_bias [768]
+l0_output_layernorm_gamma [768]
+l0_output_layernorm_beta [768]
+l1_attention_self_query_kernel [768, 768]
+l1_attention_self_query_bias [768]
+l1_attention_self_key_kernel [768, 768]
+l1_attention_self_key_bias [768]
+l1_attention_self_value_kernel [768, 768]
+l1_attention_self_value_bias [768]
+l1_attention_output_dense_kernel [768, 768]
+l1_attention_output_dense_bias [768]
+l1_attention_output_layernorm_gamma [768]
+l1_attention_output_layernorm_beta [768]
+l1_intermediate_dense_kernel [3072, 768]
+l1_intermediate_dense_bias [3072]
+l1_output_dense_kernel [768, 3072]
+l1_output_dense_bias [768]
+l1_output_layernorm_gamma [768]
+l1_output_layernorm_beta [768]
+l2_attention_self_query_kernel [768, 768]
+l2_attention_self_query_bias [768]
+l2_attention_self_key_kernel [768, 768]
+l2_attention_self_key_bias [768]
+l2_attention_self_value_kernel [768, 768]
+l2_attention_self_value_bias [768]
+l2_attention_output_dense_kernel [768, 768]
+l2_attention_output_dense_bias [768]
+l2_attention_output_layernorm_gamma [768]
+l2_attention_output_layernorm_beta [768]
+l2_intermediate_dense_kernel [3072, 768]
+l2_intermediate_dense_bias [3072]
+l2_output_dense_kernel [768, 3072]
+l2_output_dense_bias [768]
+l2_output_layernorm_gamma [768]
+l2_output_layernorm_beta [768]
+l3_attention_self_query_kernel [768, 768]
+l3_attention_self_query_bias [768]
+l3_attention_self_key_kernel [768, 768]
+l3_attention_self_key_bias [768]
+l3_attention_self_value_kernel [768, 768]
+l3_attention_self_value_bias [768]
+l3_attention_output_dense_kernel [768, 768]
+l3_attention_output_dense_bias [768]
+l3_attention_output_layernorm_gamma [768]
+l3_attention_output_layernorm_beta [768]
+l3_intermediate_dense_kernel [3072, 768]
+l3_intermediate_dense_bias [3072]
+l3_output_dense_kernel [768, 3072]
+l3_output_dense_bias [768]
+l3_output_layernorm_gamma [768]
+l3_output_layernorm_beta [768]
+l4_attention_self_query_kernel [768, 768]
+l4_attention_self_query_bias [768]
+l4_attention_self_key_kernel [768, 768]
+l4_attention_self_key_bias [768]
+l4_attention_self_value_kernel [768, 768]
+l4_attention_self_value_bias [768]
+l4_attention_output_dense_kernel [768, 768]
+l4_attention_output_dense_bias [768]
+l4_attention_output_layernorm_gamma [768]
+l4_attention_output_layernorm_beta [768]
+l4_intermediate_dense_kernel [3072, 768]
+l4_intermediate_dense_bias [3072]
+l4_output_dense_kernel [768, 3072]
+l4_output_dense_bias [768]
+l4_output_layernorm_gamma [768]
+l4_output_layernorm_beta [768]
+l5_attention_self_query_kernel [768, 768]
+l5_attention_self_query_bias [768]
+l5_attention_self_key_kernel [768, 768]
+l5_attention_self_key_bias [768]
+l5_attention_self_value_kernel [768, 768]
+l5_attention_self_value_bias [768]
+l5_attention_output_dense_kernel [768, 768]
+l5_attention_output_dense_bias [768]
+l5_attention_output_layernorm_gamma [768]
+l5_attention_output_layernorm_beta [768]
+l5_intermediate_dense_kernel [3072, 768]
+l5_intermediate_dense_bias [3072]
+l5_output_dense_kernel [768, 3072]
+l5_output_dense_bias [768]
+l5_output_layernorm_gamma [768]
+l5_output_layernorm_beta [768]
+l6_attention_self_query_kernel [768, 768]
+l6_attention_self_query_bias [768]
+l6_attention_self_key_kernel [768, 768]
+l6_attention_self_key_bias [768]
+l6_attention_self_value_kernel [768, 768]
+l6_attention_self_value_bias [768]
+l6_attention_output_dense_kernel [768, 768]
+l6_attention_output_dense_bias [768]
+l6_attention_output_layernorm_gamma [768]
+l6_attention_output_layernorm_beta [768]
+l6_intermediate_dense_kernel [3072, 768]
+l6_intermediate_dense_bias [3072]
+l6_output_dense_kernel [768, 3072]
+l6_output_dense_bias [768]
+l6_output_layernorm_gamma [768]
+l6_output_layernorm_beta [768]
+l7_attention_self_query_kernel [768, 768]
+l7_attention_self_query_bias [768]
+l7_attention_self_key_kernel [768, 768]
+l7_attention_self_key_bias [768]
+l7_attention_self_value_kernel [768, 768]
+l7_attention_self_value_bias [768]
+l7_attention_output_dense_kernel [768, 768]
+l7_attention_output_dense_bias [768]
+l7_attention_output_layernorm_gamma [768]
+l7_attention_output_layernorm_beta [768]
+l7_intermediate_dense_kernel [3072, 768]
+l7_intermediate_dense_bias [3072]
+l7_output_dense_kernel [768, 3072]
+l7_output_dense_bias [768]
+l7_output_layernorm_gamma [768]
+l7_output_layernorm_beta [768]
+l8_attention_self_query_kernel [768, 768]
+l8_attention_self_query_bias [768]
+l8_attention_self_key_kernel [768, 768]
+l8_attention_self_key_bias [768]
+l8_attention_self_value_kernel [768, 768]
+l8_attention_self_value_bias [768]
+l8_attention_output_dense_kernel [768, 768]
+l8_attention_output_dense_bias [768]
+l8_attention_output_layernorm_gamma [768]
+l8_attention_output_layernorm_beta [768]
+l8_intermediate_dense_kernel [3072, 768]
+l8_intermediate_dense_bias [3072]
+l8_output_dense_kernel [768, 3072]
+l8_output_dense_bias [768]
+l8_output_layernorm_gamma [768]
+l8_output_layernorm_beta [768]
+l9_attention_self_query_kernel [768, 768]
+l9_attention_self_query_bias [768]
+l9_attention_self_key_kernel [768, 768]
+l9_attention_self_key_bias [768]
+l9_attention_self_value_kernel [768, 768]
+l9_attention_self_value_bias [768]
+l9_attention_output_dense_kernel [768, 768]
+l9_attention_output_dense_bias [768]
+l9_attention_output_layernorm_gamma [768]
+l9_attention_output_layernorm_beta [768]
+l9_intermediate_dense_kernel [3072, 768]
+l9_intermediate_dense_bias [3072]
+l9_output_dense_kernel [768, 3072]
+l9_output_dense_bias [768]
+l9_output_layernorm_gamma [768]
+l9_output_layernorm_beta [768]
+l10_attention_self_query_kernel [768, 768]
+l10_attention_self_query_bias [768]
+l10_attention_self_key_kernel [768, 768]
+l10_attention_self_key_bias [768]
+l10_attention_self_value_kernel [768, 768]
+l10_attention_self_value_bias [768]
+l10_attention_output_dense_kernel [768, 768]
+l10_attention_output_dense_bias [768]
+l10_attention_output_layernorm_gamma [768]
+l10_attention_output_layernorm_beta [768]
+l10_intermediate_dense_kernel [3072, 768]
+l10_intermediate_dense_bias [3072]
+l10_output_dense_kernel [768, 3072]
+l10_output_dense_bias [768]
+l10_output_layernorm_gamma [768]
+l10_output_layernorm_beta [768]
+l11_attention_self_query_kernel [768, 768]
+l11_attention_self_query_bias [768]
+l11_attention_self_key_kernel [768, 768]
+l11_attention_self_key_bias [768]
+l11_attention_self_value_kernel [768, 768]
+l11_attention_self_value_bias [768]
+l11_attention_output_dense_kernel [768, 768]
+l11_attention_output_dense_bias [768]
+l11_attention_output_layernorm_gamma [768]
+l11_attention_output_layernorm_beta [768]
+l11_intermediate_dense_kernel [3072, 768]
+l11_intermediate_dense_bias [3072]
+l11_output_dense_kernel [768, 3072]
+l11_output_dense_bias [768]
+l11_output_layernorm_gamma [768]
+l11_output_layernorm_beta [768]
+cls_predictions_bias [30522]
+cls_predictions_transform_dense_kernel [768, 768]
+cls_predictions_transform_dense_bias [768]
+cls_predictions_transform_layernorm_gamma [768]
+cls_predictions_transform_layernorm_beta [768]
+binding: input_ids
+binding: token_type_ids
+binding: position_ids
+binding: (Unnamed Layer* 722) [ElementWise]_output
+==============test_case_data===================
+[[  101  1996  3007  1997  2605  1010   103  1010  3397  1996  1041 13355
+   2884  3578  1012   102]]
+(1, 16)
+[[0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]]
+[[ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15]]
+time=3.177810925990343ms
+outputs.shape:(1, 16, 30522)
+outputs.sum:-3661607.0
+time=3.235478885471821ms
+outputs.shape:(1, 16, 30522)
+outputs.sum:-3661607.0
+-3662642.0
+[[[ -6.646166   -6.6775427  -6.6606226 ...  -5.966042   -5.784356
+    -4.1950755]
+  [-14.722225  -15.215148  -15.051267  ... -13.528878  -11.396032
+   -14.560959 ]
+  [-10.122334  -10.729734  -10.116265  ...  -9.282223   -7.6954036
+   -15.493001 ]
+  ...
+  [-10.708997  -11.261735  -10.994611  ...  -8.499449   -9.652092
+   -14.280554 ]
+  [-12.298668  -12.013124  -12.527008  ... -10.834083  -11.209133
+    -5.0133805]
+  [-12.729225  -13.499596  -13.165473  ... -13.218324  -10.630966
+   -12.890835 ]]]
+-3661607.0
+(1, 16, 30522)
+float32
+[[[ -6.6289062  -6.6640625  -6.6601562 ...  -5.9492188  -5.78125
+    -4.1835938]
+  [-14.7109375 -15.21875   -15.0546875 ... -13.5390625 -11.390625
+   -14.546875 ]
+  [-10.1484375 -10.734375  -10.1328125 ...  -9.296875   -7.7148438
+   -15.5390625]
+  ...
+  [-10.71875   -11.2734375 -10.9765625 ...  -8.515625   -9.6484375
+   -14.28125  ]
+  [-12.2734375 -11.9921875 -12.5       ... -10.8046875 -11.171875
+    -5.03125  ]
+  [-12.7109375 -13.484375  -13.140625  ... -13.21875   -10.6328125
+   -12.8828125]]]
+==============model test===================
+time=3.1473911367356777ms
+outputs.shape:(1, 16, 30522)
+outputs.sum:-3661607.0
+[array([[[ -6.6289062,  -6.6640625,  -6.6601562, ...,  -5.9492188,
+          -5.78125  ,  -4.1835938],
+        [-14.7109375, -15.21875  , -15.0546875, ..., -13.5390625,
+         -11.390625 , -14.546875 ],
+        [-10.1484375, -10.734375 , -10.1328125, ...,  -9.296875 ,
+          -7.7148438, -15.5390625],
+        ...,
+        [-10.71875  , -11.2734375, -10.9765625, ...,  -8.515625 ,
+          -9.6484375, -14.28125  ],
+        [-12.2734375, -11.9921875, -12.5      , ..., -10.8046875,
+         -11.171875 ,  -5.03125  ],
+        [-12.7109375, -13.484375 , -13.140625 , ..., -13.21875  ,
+         -10.6328125, -12.8828125]]], dtype=float32)]
+model test topk10 output:
+The capital of France, paris, contains the Eiffel Tower.
+The capital of France, lyon, contains the Eiffel Tower.
+The capital of France, lille, contains the Eiffel Tower.
+The capital of France, toulouse, contains the Eiffel Tower.
+The capital of France, marseille, contains the Eiffel Tower.
+The capital of France, orleans, contains the Eiffel Tower.
+The capital of France, strasbourg, contains the Eiffel Tower.
+The capital of France, nice, contains the Eiffel Tower.
+The capital of France, cannes, contains the Eiffel Tower.
+The capital of France, versailles, contains the Eiffel Tower.

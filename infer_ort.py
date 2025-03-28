@@ -4,35 +4,22 @@ import onnx
 import time
 import os
 from transformers import BertTokenizer
+import torch
+from torch.nn import functional as F
 
 BERT_PATH = './bert-base-uncased'
 PROVIDER = 'CUDAExecutionProvider'
 
 
-def export_sim(in_path, out_path):
-    onnx_model = onnx.load(in_path)
-    try:
-        model_sim, check = onnxsim.simplify(onnx_model)
-        assert check, "Simplified ONNX model could not be validated"
-    except Exception as e:
-        print(f'Simplifier failure: {e}')
-    
-    onnx.save(model_sim, out_path)
-    print("Simplify model is saved as ", out_path)
-
-
 def load_session():
     print("===================load session=======================")
     
-    onnx_path = os.path.join(BERT_PATH, "model.onnx")
-    onnx_sim_path = os.path.join(BERT_PATH, "model-sim.onnx")
+    onnx_sim_path = os.path.join(BERT_PATH, "model_sim.onnx")
     
     # If simplified model already exists, then use it.
     if not os.path.exists(onnx_sim_path):
-        if not os.path.exists(onnx_path):
-            print("ONNX file not exist!")
-            return None
-        export_sim(onnx_sim_path)
+        print("ONNX file not exist!")
+        return None
     
     # Check if GPU is avalidable.
     available_providers = onnxruntime.get_available_providers()
@@ -48,15 +35,28 @@ def load_session():
 def infer(model, tokenizer, text):
     print("===================infer=======================")
     encoded_input = tokenizer.encode_plus(text, return_tensors = "pt")    
-    model_input = tuple(encoded_input.values())
-    onnx_input = {k.name : v.numpy() for k, v in zip(model.get_inputs(), model_input)}
+    mask_index = torch.where(encoded_input["input_ids"][0] == tokenizer.mask_token_id)
+    
+    onnx_input = {k: v.numpy() for k, v in encoded_input.items()}
     print(onnx_input)
-    print(onnx_input['input_ids'].dtype)
     ts = time.time()
     for i in range(100):
         outputs = model.run(None, onnx_input)
     print("Average time cost:", round(((time.time() - ts) / 100.0) * 1000, 3), " ms")
-    print("Output tensor: ", outputs[0].flatten()[:16], "...")
+    print("output shape:", outputs[0].shape)
+    print("output:", outputs[0])
+    print("output sum:", outputs[0].sum())
+    
+    logits = torch.Tensor(outputs[0]).cuda()
+    mask_word = logits[0, mask_index, :]
+    mask_word = F.softmax(mask_word, dim = 1)
+    top_10 = torch.topk(mask_word, 10, dim = 1)[1][0]
+    print(top_10)
+    print("model test topk10 output:")
+    for token in top_10:
+        word = tokenizer.decode([token])
+        new_sentence = text.replace(tokenizer.mask_token, word)
+        print(token, new_sentence)
 
 
 if __name__ == "__main__":

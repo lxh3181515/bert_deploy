@@ -11,8 +11,8 @@ using namespace nvinfer1;
 using namespace nvonnxparser;
 
 static Logger gLogger;
-const string onnx_path = "./bert-base-uncased/model-sim.onnx";
-const string trt_path = "./bert-base-uncased/model.plan";
+const string onnx_path = "./bert-base-uncased/model_sim.onnx";
+const string trt_path = "./bert-base-uncased/model_sim.plan";
 
 
 ICudaEngine* createCudaEngine(string const& onnx_path, int batch_size) {
@@ -29,7 +29,7 @@ ICudaEngine* createCudaEngine(string const& onnx_path, int batch_size) {
         return nullptr;
     }
 
-    config->setMaxWorkspaceSize(1 << 30);
+    config->setMaxWorkspaceSize(5 << 30);
 
     /* 动态shape */
     auto profile = builder->createOptimizationProfile();
@@ -38,7 +38,7 @@ ICudaEngine* createCudaEngine(string const& onnx_path, int batch_size) {
         auto input_tensor = network->getInput(i);
         profile->setDimensions(input_tensor->getName(), OptProfileSelector::kMIN, Dims2(1, 6));
         profile->setDimensions(input_tensor->getName(), OptProfileSelector::kOPT, Dims2(1, 64));
-        profile->setDimensions(input_tensor->getName(), OptProfileSelector::kMAX, Dims2(1, 256));
+        profile->setDimensions(input_tensor->getName(), OptProfileSelector::kMAX, Dims2(8, 256));
     }
     config->addOptimizationProfile(profile);
 

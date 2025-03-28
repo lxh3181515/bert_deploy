@@ -16,7 +16,7 @@ using namespace cudawrapper;
 
 
 static Logger gLogger;
-const string trt_path = "./bert-base-uncased/model.plan";
+const string trt_path = "./bert-base-uncased/model_sim.plan";
 const int batch_size = 1;
 const int seq_len = 16;
 
@@ -58,6 +58,27 @@ ICudaEngine* loadEngine(const string &trt_path) {
 }
 
 
+// 将一维 vector 转换为二维 vector
+vector<vector<float>> reshape(const vector<float>& vec, size_t rows, size_t cols) {
+    // 检查输入是否合法
+    if (vec.size() != rows * cols) {
+        throw std::invalid_argument("Cannot reshape: dimensions do not match the vector size.");
+    }
+
+    // 创建二维 vector
+    vector<vector<float>> result(rows, vector<float>(cols));
+
+    // 填充二维 vector
+    for (size_t i = 0; i < rows; ++i) {
+        for (size_t j = 0; j < cols; ++j) {
+            result[i][j] = vec[i * cols + j];
+        }
+    }
+
+    return result;
+}
+
+
 int main() {
     void* bindings[4]{0};
     vector<vector<int>> input_tensor(3);
@@ -90,8 +111,8 @@ int main() {
 
     input_tensor = vector<vector<int>>{
         {101, 1996, 3007, 1997, 2605, 1010, 103, 1010, 3397, 1996, 1041, 13355, 2884, 3578, 1012, 102},
-        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}};
+        {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+        {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}};
 
     Dims2 inputDims{batch_size, seq_len};
     for (int i = 0; i < input_tensor.size(); i++) {
@@ -110,9 +131,23 @@ int main() {
     }
     cout << "Average time cost: " << (clock() - ts) * 10.0 / CLOCKS_PER_SEC << "ms" << endl;
 
-    cout << "Output tensor: ";
-    for (int i = 0; i < 16; i++) {
-        cout << output_tensor[i] << " ";
+    cout << "Output:\n";
+    std::vector<std::vector<float>> output = reshape(output_tensor, 16, 30522);
+    for (int i = 0; i < output.size(); i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << output[i][j] << " ";
+        }
+        cout << "... ";
+        for (int j = output[0].size() - 3; j < output[0].size(); j++) {
+            cout << output[i][j] << " ";
+        }
+        cout << endl;
     }
-    cout << endl;
+
+    cout << "Output sum:";
+    float sum = 0.0;
+    for (int i = 0; i < output_tensor.size(); i++) {
+        sum += output_tensor[i];
+    }
+    cout << sum << endl;
 }

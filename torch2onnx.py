@@ -3,16 +3,18 @@ from torch.nn import functional as F
 import numpy as np
 import os
 from transformers import BertTokenizer, BertForMaskedLM
+import onnxsim
+import onnx
+import onnxruntime
 
-# import onnxruntime as ort
-import transformers
 
-print("pytorch:", torch.__version__)
+# print("pytorch:", torch.__version__)
 # print("onnxruntime version:", ort.__version__)
 # print("onnxruntime device:", ort.get_device())
-print("transformers:", transformers.__version__)
+# print("transformers:", transformers.__version__)
 
 BERT_PATH = 'bert-base-uncased'
+PROVIDER = 'CUDAExecutionProvider'
 
 
 def model_test(model, tokenizer, text):
@@ -24,8 +26,8 @@ def model_test(model, tokenizer, text):
     print("output shape:", output[0].shape)
 
     logits = output.logits
-    softmax = F.softmax(logits, dim = -1)
-    mask_word = softmax[0, mask_index, :]
+    mask_word = logits[0, mask_index, :]
+    mask_word = F.softmax(mask_word, dim = 1)
     top_10 = torch.topk(mask_word, 10, dim = 1)[1][0]
     print("model test topk10 output:")
     for token in top_10:
@@ -52,17 +54,16 @@ def model_test(model, tokenizer, text):
     data = np.load(npz_file)
     print(data['input_ids'])
 
-def model2onnx(model, tokenizer, text):
+
+def model2onnx(model, tokenizer, text, export_model_path):
     print("===================model2onnx=======================")
     encoded_input = tokenizer.encode_plus(text, return_tensors = "pt")
     print(encoded_input)
 
     # convert model to onnx
     model.eval()
-    export_model_path = BERT_PATH + "/model.onnx"
     opset_version = 14
-    # symbolic_names = {0: 'batch_size', 1: 'max_seq_len'}
-    symbolic_names = {1: 'max_seq_len'}
+    symbolic_names = {0: 'batch_size', 1: 'max_seq_len'}
     print(tuple(encoded_input.values())[0].shape)
     torch.onnx.export(model,                                            # model being run
                       args=tuple(encoded_input.values()),                      # model input (or a tuple for multiple inputs)
@@ -79,6 +80,19 @@ def model2onnx(model, tokenizer, text):
                                   'logits' : symbolic_names})
     print("Model exported at ", export_model_path)
 
+
+def model_simplify(in_path, out_path):
+    onnx_model = onnx.load(in_path)
+    try:
+        model_sim, check = onnxsim.simplify(onnx_model)
+        assert check, "Simplified ONNX model could not be validated"
+    except Exception as e:
+        print(f'Simplifier failure: {e}')
+    
+    onnx.save(model_sim, out_path)
+    print("Simplify model is saved as ", out_path)
+
+
 if __name__ == '__main__':
 
     if not os.path.exists(BERT_PATH):
@@ -88,7 +102,9 @@ if __name__ == '__main__':
     tokenizer = BertTokenizer.from_pretrained(BERT_PATH)
     model = BertForMaskedLM.from_pretrained(BERT_PATH, return_dict = True)
     text = "The capital of France, " + tokenizer.mask_token + ", contains the Eiffel Tower."
-
     model_test(model, tokenizer, text)
-    model2onnx(model, tokenizer, text)
 
+    onnx_path = os.path.join(BERT_PATH, "model.onnx")
+    onnx_sim_path = os.path.join(BERT_PATH, "model_sim.onnx")
+    model2onnx(model, tokenizer, text, onnx_path)
+    model_simplify(onnx_path, onnx_sim_path)
